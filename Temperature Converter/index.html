@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .converter-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .input-group label {
+            flex: 1;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .input-group input[type="number"] {
+            flex: 2;
+            padding: 5px;
+        }
+
+        .input-group select {
+            flex: 1;
+            padding: 5px;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .convert-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .footer__copy {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Temperature Converter</h1>
+    <div class="converter-container">
+        <div class="input-group">
+            <label>Temperature:</label>
+            <input type="number" id="temperatureInput" required>
+        </div>
+        <div class="input-group">
+            <label>From:</label>
+            <select id="fromUnit">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label>To:</label>
+            <select id="toUnit">
+                <option value="celsius">Celsius</option>
+                <option value="fahrenheit">Fahrenheit</option>
+                <option value="kelvin">Kelvin</option>
+            </select>
+        </div>
+        <button class="convert-button" onclick="convertTemperature()">Convert</button>
+        <div class="result" id="convertedResult"></div>
+    </div>
+    <p class="footer__copy">&copy; 2023 Richa | All Rights Reserved</p>
+
+    <script>
+        function convertTemperature() {
+            var temperatureInput = document.getElementById('temperatureInput').value;
+            var fromUnit = document.getElementById('fromUnit').value;
+            var toUnit = document.getElementById('toUnit').value;
+            var convertedResult = document.getElementById('convertedResult');
+
+            if (temperatureInput === '') {
+                convertedResult.innerHTML = 'Please enter a temperature.';
+                return;
+            }
+
+            var convertedTemperature;
+            if (fromUnit === 'celsius') {
+                if (toUnit === 'fahrenheit') {
+                    convertedTemperature = (temperatureInput * 9 / 5) + 32;
+                } else if (toUnit === 'kelvin') {
+                    convertedTemperature = parseFloat(temperatureInput) + 273.15;
+                } else {
+                    convertedTemperature = parseFloat(temperatureInput);
+                }
+            } else if (fromUnit === 'fahrenheit') {
+                if (toUnit === 'celsius') {
+                    convertedTemperature = (temperatureInput - 32) * 5 / 9;
+                } else if (toUnit === 'kelvin') {
+                    convertedTemperature = (temperatureInput - 32) * 5 / 9 + 273.15;
+                } else {
+                    convertedTemperature = parseFloat(temperatureInput);
+                }
+            } else if (fromUnit === 'kelvin') {
+                if (toUnit === 'celsius') {
+                    convertedTemperature = temperatureInput - 273.15;
+                } else if (toUnit === 'fahrenheit') {
+                    convertedTemperature = (temperatureInput - 273.15) * 9 / 5 + 32;
+                } else {
+                    convertedTemperature = parseFloat(temperatureInput);
+                }
+            }
+
+            convertedResult.innerHTML = convertedTemperature.toFixed(2) + ' ' + toUnit;
+        }
+    </script>
+</body>
+
+</html>
